@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/paulaminozzo/Documents/GitHub/cs-5008-code-pminoneu-1/Day 2/cents'
+relocations:     []
+...
