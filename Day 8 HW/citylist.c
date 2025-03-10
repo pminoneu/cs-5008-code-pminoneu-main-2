@@ -46,7 +46,7 @@ void insertFront(sNode **head, cityData *city) {
 }
 
 // creates a function to print the list
-void printList(sNode *head) {
+void printList(sNode *head, int n) {
     sNode *current = head; // creates a pointer to the head
     while (current != NULL) { // loops until the end of the list
         cityData *city = (cityData*)current->data; // assigns the data to a city
@@ -56,7 +56,7 @@ void printList(sNode *head) {
 }
 
 //creates function to read cities from file 
-void loadCities(sNode **head, char *filename) 
+void loadCities(sNode **head, char *filename, int n) 
 {
 FILE *file = fopen("uscities.csv", "r");
 
@@ -84,8 +84,8 @@ int main () {
     scanf("%d", &n);
     
     sNode *head = NULL; // creates an empty list
-    loadCities(&head, "uscities.csv");
-    printList(head);
+    loadCities(&head, "uscities.csv", n); // loads cities from the file
+    printList(head, n);
     
 
     /*read in that many cities, creating a variable-length array of 
