@@ -80,7 +80,7 @@ typedef struct bstNode {
     struct bstNode *right;   // Pointer to right child (larger latitude)
 } bstNode;
 
-// creates a function to insert a city into a binary search tree
+// creates a function to insert a city into a binary search tree by latitude
 bstNode* insertBST(bstNode *root, cityData *city) {
     if (root == NULL) {
         bstNode *newNode = (bstNode*)malloc(sizeof(bstNode));
@@ -110,6 +110,38 @@ void inOrder(bstNode *root, cityData *cities[], int *index) {
     (*index)++;
     inOrder(root->right, cities, index);
 }
+
+// creates a function to insert a city into a binary search tree by longitude
+bstNode* insertBSTLon(bstNode *root, cityData *city) {
+    if (root == NULL) {
+        bstNode *newNode = (bstNode*)malloc(sizeof(bstNode));
+        newNode->city = city;
+        newNode->left = newNode->right = NULL;
+
+        return newNode;
+    }
+    // Add logic to insert based on longitude or other criteria
+    if (city->longitude < root->city->longitude) {
+        root->left = insertBST(root->left, city);
+    } else {
+        root->right = insertBST(root->right, city);
+    }
+    return root;
+
+    return root;
+}
+
+//includes cities in an array in order by latitude
+void inOrderLon(bstNode *root, cityData *cities[], int *index) {
+    if (root == NULL) {
+        return;
+    }
+    inOrder(root->left, cities, index);
+    cities[*index] = root->city;
+    (*index)++;
+    inOrder(root->right, cities, index);
+}
+
 
 // creates a function that finds index of New York City in the array of cities
 int findNYC(cityData *cities[], int size) {   
@@ -150,7 +182,7 @@ while (current != NULL && count < numCities) {
 
     }
 
-//prints the index of new york city in the array of cities
+//prints the index of new york city in the array of cities by latitude
     bstNode *root = NULL;
     current = head;
     while (current != NULL) {
@@ -164,6 +196,22 @@ while (current != NULL && count < numCities) {
     int nycIndex = findNYC(cities, index);
     
         printf("By latitude, New York City is at index %d.\n", nycIndex);
+    
+
+//prints the index of new york city in the array of cities by longitude
+    bstNode *rootLon = NULL;
+    current = head;
+    while (current != NULL) {
+        cityData *city = (cityData*)current->data;
+        rootLon = insertBSTLon(rootLon, city);
+        current = current->next;
+    }
+    cityData *citiesLon[numCities];
+    int indexLon = 0;
+    inOrderLon(rootLon, citiesLon, &indexLon);
+    int nycIndexLon = findNYC(citiesLon, indexLon);
+    
+        printf("By longitude, New York City is at index %d.\n", nycIndexLon);
     
     return 0;
 }
