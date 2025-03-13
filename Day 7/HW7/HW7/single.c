@@ -7,7 +7,7 @@ typedef struct
 {
     char name[100];   // city name
     char state[3];   // state abbreviation 
-    int population[10];  // population of the city
+    int population;  // population of the city
 } cityData;
 
 // creates a struct named sNode with two members: data and next
@@ -45,15 +45,6 @@ void insertFront(sNode **head, cityData *city) {
     *head = newNode; // the new node is the head
 }
 
-// creates a function to print the list
-void printList(sNode *head) {
-    sNode *current = head; // creates a pointer to the head
-    while (current != NULL) { // loops until the end of the list
-        cityData *city = (cityData*)current->data; // assigns the data to a city
-        printf("%s, %s, %d\n", city->name, city->state, city->population); // prints the city data
-        current = current->next; // moves to the next node
-    }
-}
 
 //creates function to read cities from file 
 void loadCities(sNode **head, char *filename) 
@@ -66,11 +57,13 @@ char line[1000];  // Buffer to hold each line of the CSV file
 
     while (fgets(line, sizeof(line), file) && count < 20) {
         cityData *city = (cityData*)malloc(sizeof(cityData));
-        sscanf(line, "\"%99[^\"]\",\"%*99[^\"]\",\"%2[^\"]\",%d", 
-               city->name, city->state, &city->population);
-
-
-
+        int parsed = sscanf(line, "\"%99[^\"]\",\"%*99[^\"]\",\"%2[^\"]\",%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],\"%d\"", 
+        city->name, city->state, &city->population);
+        if (parsed != 3) {
+            printf("Error parsing line: %s\n", line);
+            free(city);
+            continue;
+        }
         insertEnd(head, city);
         count++;
     }
@@ -80,7 +73,16 @@ int main () {
 //prints
     sNode *head = NULL; // creates an empty list
     loadCities(&head, "uscities.csv");
-    printList(head);
+    printf("Cities loaded successfully.\n");
+
+    // Print the loaded cities
+    sNode *current = head;
+    while (current != NULL) {
+        cityData *city = (cityData*)current->data;
+        printf("City: %s, State: %s, Population: %d\n", city->name, city->state, city->population);
+        current = current->next;
+    }
+
     return 0;
 
 }
