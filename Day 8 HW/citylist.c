@@ -68,7 +68,7 @@ char line[1000];  // Buffer to hold each line of the CSV file
         cityData *city = (cityData*)malloc(sizeof(cityData));
         printf("DEBUG: %s", line);
 
-        sscanf(line, "\"%99[^\"]\",\"%99[^\"]\",\"%2[^\"]\",%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],\"%d\"", 
+        sscanf(line, "\"%99[^\"]\",\"%99[^\"]\",\"%2[^\"]\",%d", 
        city->name, city->state, &city->population);
 
         insertEnd(head, city);

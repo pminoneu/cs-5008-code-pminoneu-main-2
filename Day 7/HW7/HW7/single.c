@@ -7,7 +7,7 @@ typedef struct
 {
     char name[100];   // city name
     char state[3];   // state abbreviation 
-    int population;  // population of the city
+    int population[10];  // population of the city
 } cityData;
 
 // creates a struct named sNode with two members: data and next
@@ -66,14 +66,13 @@ char line[1000];  // Buffer to hold each line of the CSV file
 
     while (fgets(line, sizeof(line), file) && count < 20) {
         cityData *city = (cityData*)malloc(sizeof(cityData));
-        printf("DEBUG: %s", line);
+        sscanf(line, "\"%99[^\"]\",\"%*99[^\"]\",\"%2[^\"]\",%d", 
+               city->name, city->state, &city->population);
 
-        sscanf(line, "\"%99[^\"]\",\"%99[^\"]\",\"%2[^\"]\",%*[^,],%*[^,],%*[^,],%*[^,],%*[^,],\"%d\"", 
-       city->name, city->state, &city->population);
+
 
         insertEnd(head, city);
         count++;
-
     }
 }
     
