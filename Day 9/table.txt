@@ -1,0 +1,17 @@
+10-SECOND N VALUES
+
+                    RANDOM              SORTED          REVERSE
+                    random order data   data is sorted  data is sorted in reverse order
+
+
+BUBBLE SORT
+
+SELECTION SORT
+
+INSERTION SORT
+
+MERGE SORT
+
+QUICK SORT
+
+BST SORT

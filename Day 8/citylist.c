@@ -182,7 +182,7 @@ while (current != NULL && count < numCities) {
 
     }
 
-//prints the index of new york city in the array of cities by latitude
+//prints the index of new york city in the array of cities by 
     bstNode *root = NULL;
     current = head;
     while (current != NULL) {
